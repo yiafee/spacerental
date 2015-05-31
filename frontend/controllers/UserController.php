@@ -89,6 +89,7 @@ class UserController extends Controller
                 $message->setHtmlBody($text);
 
                 if($message->send()){
+                    
                     Yii::$app->session->set('temp_email',$model->email);
                     return $this->redirect(['confirm_email']);
                 }
