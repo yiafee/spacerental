@@ -54,7 +54,7 @@ class OperatorController extends Controller
                         'actions' => ['dashboard','profile'],
                         'allow' => true,
                         'matchCallback' => function() {
-                                return isset(\Yii::$app->user->identity) && \Yii::$app->session->get('f_user.logged_type')=='operator';                    
+                                return isset(\Yii::$app->user->identity) &&  \Yii::$app->user->identity->login_type=='operator';                    
                                 },
                     ],
                 ],

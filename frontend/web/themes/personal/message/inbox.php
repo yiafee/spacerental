@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-<?php echo $this->render('/landowner/_top_part'); ?>
+<?php echo $this->render('/'.\Yii::$app->user->identity->login_type.'/_top_part'); ?>
 
 
 <div class="container-fluid">
@@ -116,3 +116,53 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+
+
+<?php
+    $this->registerJs("
+            $('.check_all').click(function() {
+                if($(this).is(':checked')) {
+                    $('.checkbox').each(function() { 
+                        this.checked = true;              
+                    });
+                } else {
+                    $('.checkbox').each(function() { 
+                        this.checked = false;              
+                    });
+                }
+            });
+    ", yii\web\View::POS_END, 'check_uncheck_all');
+
+
+    $this->registerJs("
+                    $(document).delegate('.trash_btn', 'click', function() { 
+                        
+                        var checkboxValues = [];
+                        $('.checkbox:checked').map(function() {
+                            checkboxValues.push($(this).val());
+                        });
+
+                        $.ajax({
+                                url: '".Url::toRoute(['/message/trash_item'])."',
+                                type: 'post',
+                                data: {data:checkboxValues},
+                                beforeSend : function( request ){
+                                    
+                                },
+                                success: function(data) {
+                                    dt = jQuery.parseJSON(data);
+
+                                    if(dt.result=='success'){
+                                        $.each(checkboxValues,function(key, value){
+                                            $('#mail_row_'+value).remove();
+                                        });
+                                    }else{
+                                        
+                                        //alertify.log(dt.files, 'error', 5000);
+                                    }
+
+                                }
+                        });
+                    });
+    ", yii\web\View::POS_END, 'trash');
+?>

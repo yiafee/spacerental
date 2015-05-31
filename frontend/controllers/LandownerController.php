@@ -61,7 +61,7 @@ class LandownerController extends Controller
                                       'update_schedule','inbox', 'compose', 'sent', 'trash'],
                         'allow' => true,
                         'matchCallback' => function() {
-                                return isset(\Yii::$app->user->identity) && \Yii::$app->session->get('f_user.logged_type')=='landowner';                    
+                                return isset(\Yii::$app->user->identity) && \Yii::$app->user->identity->login_type=='landowner';                    
                                 },
                     ],
                 ],

@@ -39,7 +39,7 @@ use frontend\models\User;
 
                             <div class="col-md-2 complete">
                                 <div class="row">
-                                    <p><a href="<?= Url::toRoute(['/landowner/inbox']); ?>" class="<?php echo (Yii::$app->controller->action->id=='inbox')?'active':''; ?>">INBOX</a></p>
+                                    <p><a href="<?= Url::toRoute(['/message/inbox']); ?>" class="<?php echo (Yii::$app->controller->id=='message')?'active':''; ?>">MESSAGE</a></p>
                                 </div>
                             </div>
 

@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-<?php echo $this->render('/landowner/_top_part'); ?>
+<?php echo $this->render('/'.\Yii::$app->user->identity->login_type.'/_top_part'); ?>
 
 
 <div class="container-fluid">
@@ -61,8 +61,11 @@ $this->params['breadcrumbs'][] = $this->title;
 					                            <td colspan="4">
 					                                <input type="checkbox" class="check_all" name="check_all" style="float:left;">
 					                                <div class="btn_panel_mail text-right">
-					                                    <button class="btn btn-default btn-icon btn-sm trash_btn" type="button">
-					                                        <span class="icon"><span class="glyphicon glyphicon-trash"></span></span>
+					                                    <button class="btn btn-default btn-icon btn-sm restore_btn" type="button">
+					                                        <span class="icon"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></span>
+					                                    </button>
+					                                    <button class="btn btn-default btn-icon btn-sm remove_btn" type="button">
+					                                        <span class="icon"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
 					                                    </button>
 					                                </div>
 					                            </td>
@@ -115,3 +118,102 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+
+
+<?php
+	$this->registerJs("
+            $('.check_all').click(function() {
+                if($(this).is(':checked')) {
+                    $('.checkbox').each(function() { 
+                        this.checked = true;              
+                    });
+                } else {
+                    $('.checkbox').each(function() { 
+                        this.checked = false;              
+                    });
+                }
+            });
+    ", yii\web\View::POS_END, 'check_uncheck_all');
+
+
+    $this->registerJs("
+                    $(document).delegate('.restore_btn', 'click', function() { 
+                        
+                        var checkboxValues = [];
+                        $('.checkbox:checked').map(function() {
+                            checkboxValues.push($(this).val());
+                        });
+
+                        $.ajax({
+                                url: '".Url::toRoute(['/message/restore_item'])."',
+                                type: 'post',
+                                data: {data:checkboxValues},
+                                beforeSend : function( request ){
+                                    
+                                },
+                                success: function(data) {
+                                    dt = jQuery.parseJSON(data);
+
+                                    if(dt.result=='success'){
+                                        $.each(checkboxValues,function(key, value){
+                                            $('#mail_row_'+value).remove();
+                                        });
+                                    }else{
+                                        
+                                        //alertify.log(dt.files, 'error', 5000);
+                                    }
+
+                                }
+                        });
+                    });
+    ", yii\web\View::POS_END, 'restore');
+
+
+    $this->registerJs("
+                    $(document).delegate('.remove_btn', 'click', function() { 
+                        
+                        var checkboxValues = [];
+                        $('.checkbox:checked').map(function() {
+                            checkboxValues.push($(this).val());
+                        });
+	
+						BootstrapDialog.confirm({
+					            title: 'WARNING',
+					            message: 'Droping will permanently delete this item. Do you still want to drop it?',
+					            type: BootstrapDialog.TYPE_WARNING,
+					            closable: false,
+					            draggable: true,
+					            btnCancelLabel: 'Do not drop it!',
+					            btnOKLabel: 'Drop it!',
+					            callback: function(result) {
+						            if(result) {
+						                $.ajax({
+				                                url: '".Url::toRoute(['/message/remove_item'])."',
+				                                type: 'post',
+				                                data: {data:checkboxValues},
+				                                beforeSend : function( request ){
+				                                    
+				                                },
+				                                success: function(data) {
+				                                    dt = jQuery.parseJSON(data);
+
+				                                    if(dt.result=='success'){
+				                                        $.each(checkboxValues,function(key, value){
+				                                            $('#mail_row_'+value).remove();
+				                                        });
+				                                    }else{
+				                                        
+				                                        //alertify.log(dt.files, 'error', 5000);
+				                                    }
+
+				                                }
+				                        });
+						            }else {
+						                
+						            }
+						        }
+				        });
+                        
+                    });
+    ", yii\web\View::POS_END, 'remove');
+?>

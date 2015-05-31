@@ -62,6 +62,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['first_name', 'last_name', 'city', 'password', 'auth_key', 'gender', 'country'], 'string', 'max' => 255],
             [['email'], 'string', 'max' => 50],
             [['phone'], 'string', 'max' => 20],
+            [['login_type'],'safe'],
+            [['email'],'unique'],
 
             [['first_name', 'last_name', 'email', 'city', 'zip', 'gender', 'country', 'day', 'month', 'year'], 'required','on'=>'personal_info'],
             ['date_of_birth', 'checkdate', 'on' => 'personal_info'],

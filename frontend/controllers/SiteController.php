@@ -116,8 +116,6 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            
-            \Yii::$app->session->set('f_user.logged_type','landowner');
 
             return $this->goBack();
         } else {

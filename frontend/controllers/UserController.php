@@ -95,8 +95,8 @@ class UserController extends Controller
 
 
             }else{
-                var_dump($model->getErrors());
-                exit();
+                /*var_dump($model->getErrors());
+                exit();*/
             }
         }
 
@@ -149,6 +149,10 @@ class UserController extends Controller
         if(($type=='') || (isset(\Yii::$app->user->identity) && (\Yii::$app->user->identity->reg_status==1))){
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+
+        $update_type = User::find()->where(['id'=>\Yii::$app->user->identity->id])->one();
+        $update_type->login_type = $type;
+        $update_type->save();
 
         $model = User::find()->where(['id'=>\Yii::$app->user->identity->id])->one();
         $model->scenario = 'personal_info';
@@ -425,7 +429,6 @@ class UserController extends Controller
 
         \Yii::$app->session->set('f_user.profile_pic',$profile_photo);
         \Yii::$app->session->set('f_user.cover_photo',$cover_photo);
-        \Yii::$app->session->set('f_user.logged_type',$type);
 
         return $this->render('complete',[
                                 'type'=>$type,

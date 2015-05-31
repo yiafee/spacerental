@@ -12,7 +12,7 @@ use frontend\models\User;
 $this->title = 'Profile';
 $this->params['breadcrumbs'][] = $this->title;
 
-$logged_type = \Yii::$app->session->get('f_user.logged_type');
+$logged_type =  \Yii::$app->user->identity->login_type;
 ?>
 
 <?php

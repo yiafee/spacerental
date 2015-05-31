@@ -47,10 +47,11 @@ class MessageController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['inbox', 'compose', 'sent', 'trash', 'trash_item'],
+                        'actions' => ['inbox', 'compose', 'sent', 'trash', 'trash_item','restore_item',
+                        'remove_item'],
                         'allow' => true,
                         'matchCallback' => function() {
-                                return isset(\Yii::$app->user->identity) && \Yii::$app->session->get('f_user.logged_type')=='landowner';                    
+                                return isset(\Yii::$app->user->identity);                    
                                 },
                     ],
                 ],
@@ -82,14 +83,14 @@ class MessageController extends Controller
 
 
     public function actionInbox(){
-        $data = Message::find()->where(['to'=>\Yii::$app->user->identity->id])->all();
+        $data = Message::find()->where(['to'=>\Yii::$app->user->identity->id,'trash'=>0])->all();
 
         return $this->render('inbox',['data'=>$data]);
     }
 
 
     public function actionSent(){
-        $data = Message::find()->where(['from'=>\Yii::$app->user->identity->id])->all();
+        $data = Message::find()->where(['from'=>\Yii::$app->user->identity->id,'trash'=>0])->all();
         return $this->render('sent',['data'=>$data]);
     }
 
@@ -117,6 +118,59 @@ class MessageController extends Controller
                         $model->trash = 1;
 
                         $model->save();
+                    }
+
+                    $response['result'] = ['success'];
+                    $response['msg'] = ['ok'];
+
+                }catch(Exception $e){
+                    $response['msg'] = $e;
+                }
+             }
+
+            return json_encode($response);
+        }
+    }
+
+
+    public function actionRestore_item(){
+        if( Yii::$app->request->isAjax ){
+            $response = [];
+
+             if (isset($_POST['data'])) {
+                try{
+
+                    foreach ($_POST['data'] as $value) {
+
+                        $model = $this->findModel($value);
+                        $model->trash = 0;
+
+                        $model->save();
+                    }
+
+                    $response['result'] = ['success'];
+                    $response['msg'] = ['ok'];
+
+                }catch(Exception $e){
+                    $response['msg'] = $e;
+                }
+             }
+
+            return json_encode($response);
+        }
+    }
+
+    public function actionRemove_item(){
+        if( Yii::$app->request->isAjax ){
+            $response = [];
+
+             if (isset($_POST['data'])) {
+                try{
+
+                    foreach ($_POST['data'] as $value) {
+
+                        $model = $this->findModel($value);
+                        $model->delete();
                     }
 
                     $response['result'] = ['success'];

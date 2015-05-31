@@ -27,7 +27,7 @@ AppAsset::register($this);
 
       <?php
           $this->registerJsFile($this->theme->baseUrl."/assets/js/bootstrap.min.js", ['depends' => [\yii\web\JqueryAsset::className()]]);
-
+          $this->registerJsFile($this->theme->baseUrl."/assets/js/bootstrap-dialog.min.js", ['depends' => [\yii\web\JqueryAsset::className()]]);
       ?>
 
 </head>

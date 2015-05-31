@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-<?php echo $this->render('/landowner/_top_part'); ?>
+<?php echo $this->render('/'.\Yii::$app->user->identity->login_type.'/_top_part'); ?>
 
 
 <div class="container-fluid">
