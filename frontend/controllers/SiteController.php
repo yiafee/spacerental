@@ -9,6 +9,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\UserImg;
+use frontend\models\Search;
 
 
 use yii\base\InvalidParamException;
@@ -102,10 +103,10 @@ class SiteController extends Controller
 
     public function actionIndex()
     {   
-        
+        $model = new Search();
         
 
-        return $this->render('index'/*,['menu'=>$menu]*/);
+        return $this->render('index',['model'=>$model]);
     }
 
     public function actionLogin()
@@ -119,7 +120,10 @@ class SiteController extends Controller
 
             return $this->goBack();
         } else {
-            var_dump($model->getErrors());
+
+            \Yii::$app->getSession()->setFlash('success', 'Invalid username or password.');
+
+            return $this->goBack();
         }
     }
 

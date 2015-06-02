@@ -456,59 +456,76 @@ $this->registerJsFile("//cdn.jsdelivr.net/jquery.slick/1.5.0/slick.min.js", ['de
         $(document).delegate('.sc_delete','click',function(){
             var id = $(this).attr('href');
 
-            $.ajax({
-                type : 'POST',
-                dataType : 'json',
-                url : '".Url::toRoute('landowner/remove_schedule')."',
-                data: {id:id},
-                beforeSend : function( request ){
-                   
-                },
-                success : function( data ){ 
-                    if(data.result=='success'){
+            BootstrapDialog.confirm({
+                                title: 'WARNING',
+                                message: 'Are you sure?',
+                                type: BootstrapDialog.TYPE_WARNING,
+                                closable: false,
+                                draggable: true,
+                                btnCancelLabel: 'Do not delete it!',
+                                btnOKLabel: 'Delete it!',
+                                callback: function(result) {
+                                    if(result) {
+                                        $.ajax({
+                                            type : 'POST',
+                                            dataType : 'json',
+                                            url : '".Url::toRoute('landowner/remove_schedule')."',
+                                            data: {id:id},
+                                            beforeSend : function( request ){
+                                               
+                                            },
+                                            success : function( data ){ 
+                                                if(data.result=='success'){
 
-                        var index = $('.sc_no_'+id).attr('data-slick-index');
-                        var target_remove = $('.sc_no_'+id).attr('target_item')
+                                                    var index = $('.sc_no_'+id).attr('data-slick-index');
+                                                    var target_remove = $('.sc_no_'+id).attr('target_item')
 
-                        $('.'+target_remove).slick('slickRemove',index);
-                        $('.'+target_remove).slick('unslick');
-                        $('.'+target_remove).slick({
-                              dots: false,
-                              infinite: false,
-                              speed: 300,
-                              slidesToShow: 4,
-                              slidesToScroll: 4,
-                              responsive: [
-                                {
-                                  breakpoint: 1200,
-                                  settings: {
-                                    slidesToShow: 3,
-                                    slidesToScroll: 3
-                                  }
-                                },
-                                {
-                                  breakpoint: 600,
-                                  settings: {
-                                    slidesToShow: 2,
-                                    slidesToScroll: 2
-                                  }
-                                },
-                                {
-                                  breakpoint: 480,
-                                  settings: {
-                                    slidesToShow: 1,
-                                    slidesToScroll: 1
-                                  }
+                                                    $('.'+target_remove).slick('slickRemove',index);
+                                                    $('.'+target_remove).slick('unslick');
+                                                    $('.'+target_remove).slick({
+                                                          dots: false,
+                                                          infinite: false,
+                                                          speed: 300,
+                                                          slidesToShow: 4,
+                                                          slidesToScroll: 4,
+                                                          responsive: [
+                                                            {
+                                                              breakpoint: 1200,
+                                                              settings: {
+                                                                slidesToShow: 3,
+                                                                slidesToScroll: 3
+                                                              }
+                                                            },
+                                                            {
+                                                              breakpoint: 600,
+                                                              settings: {
+                                                                slidesToShow: 2,
+                                                                slidesToScroll: 2
+                                                              }
+                                                            },
+                                                            {
+                                                              breakpoint: 480,
+                                                              settings: {
+                                                                slidesToShow: 1,
+                                                                slidesToScroll: 1
+                                                              }
+                                                            }
+                                                          ]
+                                                        });
+
+
+                                                }else{
+                                                    alert(data.errors);
+                                                }
+                                            }
+                                        });
+                                    }else {
+                                        
+                                    }
                                 }
-                              ]
-                            });
+                        });
 
-
-                    }else{
-                        alert(data.errors);
-                    }
-                }
-            });
+            
 
             return false;
         });

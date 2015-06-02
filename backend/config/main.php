@@ -15,7 +15,7 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log','app\base\settings'],
     'modules' => [
-        'admin' => [
+        'rbac' => [
             'class' => 'mdm\admin\Module',
         ],
         'gridview' =>  [
@@ -42,7 +42,7 @@ return [
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => false,
+            'enableAutoLogin' => true,
             'identityCookie' => [
                   'name' => '_backendUser', // unique for backend
                   'path'=>'/foodtruck/admin'  // correct path for the backend app.

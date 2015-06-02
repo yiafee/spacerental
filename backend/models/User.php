@@ -7,6 +7,8 @@ use yii\base\NotSupportedException;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
+use backend\models\UserF;
+
 /**
  * This is the model class for table "user".
  *
@@ -172,5 +174,16 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         $this->password_reset_token = null;
     }
 
+    public function getUserlist(){
+        $options = [];
+
+        $data = UserF::find()->all();
+
+        foreach ($data as $key) {
+            $options[$key->id] = $key->email;
+        }
+
+        return $options;
+    }
 
 }

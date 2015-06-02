@@ -1,0 +1,163 @@
+#print_invoice{
+	width: 700px;
+	margin: 0px auto;
+}
+.invoice_cont{
+	width: 100%;
+	float: left;
+}
+.invoice_head{
+	width: 100%;
+	float: left;
+}
+.invoice_head h2{
+	text-align: center;
+	margin: 10px 0 5px 0;
+}
+.invoice_head p{
+	text-align: center;
+	margin-top: 0;
+	font-size: 12px;
+}
+
+.invoice_text{
+	width: 100%;
+	float: left;
+	border-bottom:1px solid;
+	margin-bottom: 10px;
+}
+
+.invoice_text p {
+    font-size: 20px;
+    margin-bottom: 0;
+    margin-top: 0;
+    text-align: center;
+}
+.top_info{
+	width: 100%;
+	float: left;
+}
+.top_info_left{
+	width: 45%;
+	float: left;
+}
+.top_info_right{
+	width: 45%;
+	float: right;
+}
+.top_info_left p{
+	float: left;
+	width: 100%;
+	font-size: 13px;
+	margin-top: 0;
+	margin-bottom: 6px;
+	line-height: 13px;
+}
+.top_info_left p span{
+	float: left;
+	width: 100px;
+}
+
+.top_info_right p{
+	float: left;
+	width: 100%;
+	font-size: 13px;
+	margin-top: 0;
+	margin-bottom: 6px;
+	line-height: 13px;
+}
+.top_info_right p span{
+	float: left;
+	width: 110px;
+}
+.item_info{
+	float: left;
+	width: 100%;
+	margin-top: 20px;
+}
+
+.item{
+	width: 100%;
+	float: left;
+	font-size: 13px;
+}
+.sl_no{
+	width: 5%;
+	float: left;
+}
+.item_name{
+	width: 55%;
+	float: left;
+}
+.item_qty{
+	width: 10%;
+	float: left;
+}
+.rate{
+	width: 15%;
+	float: left;
+}
+.amount{
+	width: 15%;
+	float: left;
+}
+.border_top_bottom{
+	border-top:1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	font-size: 14px;
+	padding: 3px 0;
+}
+.text_align_center{
+	text-align: center;
+}
+.text_align_right{
+	text-align: right;
+}
+.summary{
+	width: 40%;
+	float: right;
+	font-size: 12px;
+	margin-top: 25px;
+}
+.summary_text{
+	width: 65%;
+	float: left;
+	margin-top: 2px;
+}
+.summary_amount{
+	float: right;
+	width: 35%;
+	margin-top: 2px;
+}
+.border_top{
+	border-top:1px solid #ccc;
+}
+
+.invoice_footer{
+	width: 100%;
+	float: left;
+	border-top:1px solid;
+	font-size: 13px;
+	margin-top: 30px;
+}
+.footer_left{
+	width: 50%;
+	float: left;
+}
+.footer_left p{
+	margin-top: 40px;
+}
+
+.footer_right{
+	width: 50%;
+	float: right;
+}
+.footer_right p{
+	margin-top: 40px;
+	text-align: right;
+}
+
+.print_btn {
+    float: right;
+    padding-bottom: 50px;
+}

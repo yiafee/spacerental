@@ -26,12 +26,14 @@ AppAsset::register($this);
 
       <?php
           $this->registerJsFile($this->theme->baseUrl."/assets/js/bootstrap.min.js", ['depends' => [\yii\web\JqueryAsset::className()]]);
-
+          $this->registerJsFile($this->theme->baseUrl."/assets/js/bootstrap-dialog.min.js", ['depends' => [\yii\web\JqueryAsset::className()]]);
       ?>
 
 </head>
     
 <body>
+  <?php $this->beginBody() ?>
+  
     <div class="container-fluid header_wrap">
       <div class="container main_header">
         <div class="row">
@@ -56,6 +58,8 @@ AppAsset::register($this);
                 <ul>
                   <li><a href="<?= Url::toRoute(['/site/index']); ?>">Dashboard</a></li>
                   <li><a href="<?= Url::toRoute(['/user/index']); ?>">User</a></li>
+                  <li><a href="<?= Url::toRoute(['/frontenduser/index']); ?>">Landowner/Operator</a></li>
+                  <li><a href="<?= Url::toRoute(['/land/index']); ?>">Land</a></li>
                   <li>
                     <a href="<?= Url::toRoute(['/site/logout']); ?>" data-method="post">Logout</a>
                     <img src="<?= $this->theme->baseUrl; ?>/assets/img/three_dot.png">
