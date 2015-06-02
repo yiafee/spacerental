@@ -288,7 +288,7 @@ $this->registerJsFile("//cdn.jsdelivr.net/jquery.slick/1.5.0/slick.min.js", ['de
     <div class="row">
         <p><a href="#">FIND OUT HOT SPACES AROUND YOU</a></p>
     </div>
-</div>
+</div> 
 
 
 
